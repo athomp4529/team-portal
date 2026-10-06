@@ -1,10 +1,38 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Team Member Records · Ft. Totten</title>
-<style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#FCF7E7;color:#1A1A1A;font-family:Arial,sans-serif}a{color:#DD0033}</style></head>
-<body><p id="m">Opening Team Member Records…</p>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#FCF7E7;color:#1A1A1A;font-family:Arial,sans-serif;padding:24px;box-sizing:border-box}
+.card{background:#fff;border:1px solid #EEEDEB;border-radius:16px;box-shadow:0 2px 8px rgba(0,0,0,.06);padding:40px 32px;max-width:420px;width:100%;display:grid;gap:16px;justify-items:center;text-align:center}
+.eyebrow{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#5B6770}h1{margin:0;font-size:24px;color:#DD0033;letter-spacing:-.02em}p{margin:0;line-height:1.5;color:#5B6770;font-size:14px}a{color:#DD0033}#err{color:#DD0033}</style></head>
+<body><div class="card">
+  <div class="eyebrow">Chick-fil-A Ft. Totten</div>
+  <h1>Team Member Records</h1>
+  <p>Sign in with your cfafttotten.com Google account.</p>
+  <div id="btn"></div>
+  <p id="err"></p>
+</div>
 <script>
-fetch('../config.json',{cache:'no-store'}).then(function(r){return r.json();}).then(function(c){
-  if(c.adminUrl && !/PASTE/.test(c.adminUrl)) location.replace(c.adminUrl);
-  else document.getElementById('m').textContent='The admin link has not been set up yet.';
-}).catch(function(){document.getElementById('m').textContent='Could not load settings.';});
+var err = document.getElementById('err');
+function fail(t){ err.textContent = t; }
+function ready(cb){ if (window.google && google.accounts) cb(); else setTimeout(function(){ ready(cb); }, 100); }
+fetch('/config.json', { cache: 'no-store' })
+  .then(function (r) { if (!r.ok) throw new Error('config.json was not found (status ' + r.status + ').'); return r.text(); })
+  .then(function (t) {
+    var c; try { c = JSON.parse(t); } catch (e) { throw new Error('config.json has a typo: ' + e.message); }
+    if (!c.adminUrl || /PASTE/.test(c.adminUrl)) throw new Error('config.json does not have an adminUrl yet.');
+    if (!c.googleClientId || /PASTE/.test(c.googleClientId)) throw new Error('config.json does not have a googleClientId yet.');
+    ready(function () {
+      google.accounts.id.initialize({
+        client_id: c.googleClientId,
+        hd: 'cfafttotten.com',
+        auto_select: true,
+        callback: function (res) {
+          location.replace(c.adminUrl + (c.adminUrl.indexOf('?') < 0 ? '?' : '&') + 't=' + encodeURIComponent(res.credential));
+        }
+      });
+      google.accounts.id.renderButton(document.getElementById('btn'), { theme: 'outline', size: 'large', shape: 'pill', text: 'signin_with' });
+      google.accounts.id.prompt();
+    });
+  })
+  .catch(function (e) { fail('Could not start sign-in. ' + e.message); });
 </script></body></html>
