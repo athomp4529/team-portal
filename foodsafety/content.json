@@ -1,0 +1,526 @@
+{
+ "issues": [
+  {
+   "issue": "02",
+   "topic": "Handwashing & Glove Use",
+   "topicEs": "Lavado de manos y uso de guantes",
+   "headline": "Clean Hands First. Then Gloves.",
+   "headlineEs": "Primero manos limpias. Luego guantes.",
+   "intro": "Gloves don’t replace handwashing. Clean hands keep germs off your gloves and off our Guests’ food.",
+   "introEs": "Los guantes no reemplazan el lavado de manos. Las manos limpias evitan que los gérmenes pasen a los guantes y a la comida.",
+   "image": "assets/issues/02.jpg",
+   "stepsTitle": [
+    "How to Wash Your Hands",
+    "Cómo lavarte las manos"
+   ],
+   "steps": [
+    [
+     "Wet hands with warm running water.",
+     "Moja tus manos con agua tibia."
+    ],
+    [
+     "Apply soap.",
+     "Aplica jabón."
+    ],
+    [
+     "Scrub 20 seconds: backs, between fingers, under nails.",
+     "Frota 20 segundos: dorso, entre dedos y uñas."
+    ],
+    [
+     "Rinse well.",
+     "Enjuaga bien."
+    ],
+    [
+     "Dry with a paper towel.",
+     "Seca con toalla de papel."
+    ]
+   ],
+   "always": [
+    [
+     "Wash before your shift and after breaks.",
+     "Lávate antes del turno y después de descansos."
+    ],
+    [
+     "Wash after raw chicken, trash, the restroom or your phone.",
+     "Lávate después de pollo crudo, basura, el baño o tu teléfono."
+    ],
+    [
+     "Wash before every new pair of gloves.",
+     "Lávate antes de cada par de guantes nuevo."
+    ],
+    [
+     "Change gloves when torn, dirty or switching tasks.",
+     "Cambia guantes si se rompen, se ensucian o cambias de tarea."
+    ]
+   ],
+   "never": [
+    [
+     "Use hand sanitizer instead of washing.",
+     "Usar desinfectante en lugar de lavarte."
+    ],
+    [
+     "Wash hands in a prep or dish sink.",
+     "Lavarte en el fregadero de preparación o de platos."
+    ],
+    [
+     "Wear the same gloves from raw chicken to ready-to-eat food.",
+     "Usar los mismos guantes del pollo crudo a alimentos listos."
+    ]
+   ],
+   "remember": [
+    "Change gloves at least every **4 hours** of continuous use, and anytime they tear.",
+    "Cambia los guantes al menos cada 4 horas de uso continuo y cuando se rompan."
+   ],
+   "quiz": [
+    {
+     "type": "mc",
+     "q": "Where should you wash your hands?",
+     "qEs": "¿Dónde debes lavarte las manos?",
+     "options": [
+      [
+       "A",
+       "At a handwashing sink",
+       "En un lavamanos"
+      ],
+      [
+       "B",
+       "At the 3-compartment sink",
+       "En el fregadero de 3 compartimentos"
+      ],
+      [
+       "C",
+       "At the prep sink",
+       "En el fregadero de preparación"
+      ]
+     ]
+    },
+    {
+     "type": "tf",
+     "q": "If you change your gloves, you don’t need to wash your hands.",
+     "qEs": "Si cambias tus guantes, no necesitas lavarte las manos.",
+     "options": [
+      [
+       "T",
+       "True",
+       "Cierto"
+      ],
+      [
+       "F",
+       "False",
+       "Falso"
+      ]
+     ]
+    },
+    {
+     "type": "fill",
+     "q": "Scrub your hands with soap for at least ___ seconds.",
+     "qEs": "Frota tus manos con jabón al menos ___ segundos.",
+     "options": [
+      [
+       "A",
+       "10",
+       "10"
+      ],
+      [
+       "B",
+       "20",
+       "20"
+      ],
+      [
+       "C",
+       "5",
+       "5"
+      ]
+     ]
+    },
+    {
+     "type": "mc",
+     "q": "When must you change your gloves?",
+     "qEs": "¿Cuándo debes cambiar tus guantes?",
+     "options": [
+      [
+       "A",
+       "Only at the end of your shift",
+       "Solo al final del turno"
+      ],
+      [
+       "B",
+       "When torn, or when switching from raw chicken to ready-to-eat food",
+       "Si se rompen o al pasar de pollo crudo a alimentos listos"
+      ],
+      [
+       "C",
+       "Only when they look dirty",
+       "Solo cuando se ven sucios"
+      ]
+     ]
+    },
+    {
+     "type": "tf",
+     "q": "Hand sanitizer can replace handwashing.",
+     "qEs": "El desinfectante de manos puede reemplazar el lavado de manos.",
+     "options": [
+      [
+       "T",
+       "True",
+       "Cierto"
+      ],
+      [
+       "F",
+       "False",
+       "Falso"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "issue": "03",
+   "topic": "Cleaning vs. Sanitizing",
+   "topicEs": "Limpiar vs. desinfectar",
+   "headline": "Clean It. Then Sanitize It.",
+   "headlineEs": "Límpialo. Luego desinféctalo.",
+   "intro": "Cleaning removes the dirt and food you can see. Sanitizing reduces the germs you can’t see to safe levels. Always clean first.",
+   "introEs": "Limpiar quita la suciedad y la comida que ves. Desinfectar reduce los gérmenes que no ves. Siempre limpia primero.",
+   "image": "assets/issues/03.jpg",
+   "stepsTitle": [
+    "3-Compartment Sink",
+    "Fregadero de 3 compartimentos"
+   ],
+   "steps": [
+    [
+     "Scrape off food.",
+     "Raspa los restos."
+    ],
+    [
+     "Wash in soapy water.",
+     "Lava con agua y jabón."
+    ],
+    [
+     "Rinse in clean water.",
+     "Enjuaga con agua limpia."
+    ],
+    [
+     "Sanitize for the required contact time.",
+     "Desinfecta el tiempo requerido."
+    ],
+    [
+     "Air dry.",
+     "Deja secar al aire."
+    ]
+   ],
+   "always": [
+    [
+     "Test sanitizer with a test strip.",
+     "Mide el desinfectante con una tira reactiva."
+    ],
+    [
+     "Keep wiping cloths in sanitizer between uses.",
+     "Guarda los trapos en desinfectante entre usos."
+    ],
+    [
+     "Replace sanitizer when it’s dirty or on schedule.",
+     "Cambia el desinfectante si está sucio o según el horario."
+    ],
+    [
+     "Label every chemical spray bottle.",
+     "Etiqueta cada botella de químico."
+    ]
+   ],
+   "never": [
+    [
+     "Sanitize a dirty surface without cleaning it first.",
+     "Desinfectar sin limpiar primero."
+    ],
+    [
+     "Towel dry dishes or utensils.",
+     "Secar platos o utensilios con toalla."
+    ],
+    [
+     "Store chemicals above or next to food.",
+     "Guardar químicos arriba o junto a la comida."
+    ]
+   ],
+   "remember": [
+    "Clean and sanitize food-contact surfaces at least every **4 hours** while in use, and after raw chicken.",
+    "Limpia y desinfecta las superficies en contacto con alimentos al menos cada 4 horas y después del pollo crudo."
+   ],
+   "quiz": [
+    {
+     "type": "mc",
+     "q": "What does cleaning do?",
+     "qEs": "¿Qué hace la limpieza?",
+     "options": [
+      [
+       "A",
+       "Removes the dirt and food you can see",
+       "Quita la suciedad y comida que se ve"
+      ],
+      [
+       "B",
+       "Kills all germs",
+       "Mata todos los gérmenes"
+      ],
+      [
+       "C",
+       "Makes surfaces shiny",
+       "Hace brillar las superficies"
+      ]
+     ]
+    },
+    {
+     "type": "tf",
+     "q": "You should sanitize a surface before you clean it.",
+     "qEs": "Debes desinfectar una superficie antes de limpiarla.",
+     "options": [
+      [
+       "T",
+       "True",
+       "Cierto"
+      ],
+      [
+       "F",
+       "False",
+       "Falso"
+      ]
+     ]
+    },
+    {
+     "type": "fill",
+     "q": "Scrape, Wash, Rinse, ___, Air Dry.",
+     "qEs": "Raspar, Lavar, Enjuagar, ___, Secar al aire.",
+     "options": [
+      [
+       "A",
+       "Sanitize",
+       "Desinfectar"
+      ],
+      [
+       "B",
+       "Towel dry",
+       "Secar con toalla"
+      ],
+      [
+       "C",
+       "Polish",
+       "Pulir"
+      ]
+     ]
+    },
+    {
+     "type": "mc",
+     "q": "How do you check that sanitizer is the right strength?",
+     "qEs": "¿Cómo revisas que el desinfectante tenga la concentración correcta?",
+     "options": [
+      [
+       "A",
+       "Smell it",
+       "Olerlo"
+      ],
+      [
+       "B",
+       "Use a test strip",
+       "Usar una tira reactiva"
+      ],
+      [
+       "C",
+       "Check the color",
+       "Revisar el color"
+      ]
+     ]
+    },
+    {
+     "type": "tf",
+     "q": "Dishes and utensils should air dry, not towel dry.",
+     "qEs": "Los platos y utensilios deben secarse al aire, no con toalla.",
+     "options": [
+      [
+       "T",
+       "True",
+       "Cierto"
+      ],
+      [
+       "F",
+       "False",
+       "Falso"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "issue": "04",
+   "topic": "Receiving & Storage (FIFO)",
+   "topicEs": "Recepción y almacenamiento (FIFO)",
+   "headline": "Check It In. Put It Away Right.",
+   "headlineEs": "Revísalo al recibir. Guárdalo bien.",
+   "intro": "Safe food starts at the back door. Check every delivery, put cold and frozen items away first, and store by FIFO.",
+   "introEs": "La comida segura empieza en la entrega. Revisa cada pedido, guarda primero lo frío y congelado, y almacena con FIFO.",
+   "image": "assets/issues/04.jpg",
+   "stepsTitle": [
+    "Receiving a Delivery",
+    "Al recibir un pedido"
+   ],
+   "steps": [
+    [
+     "Check temperatures.",
+     "Revisa las temperaturas."
+    ],
+    [
+     "Inspect the packaging.",
+     "Inspecciona los empaques."
+    ],
+    [
+     "Put cold and frozen items away first.",
+     "Guarda primero lo frío y congelado."
+    ],
+    [
+     "Label and date.",
+     "Etiqueta y pon fecha."
+    ],
+    [
+     "Rotate: oldest in front.",
+     "Rota: lo más antiguo adelante."
+    ]
+   ],
+   "always": [
+    [
+     "Cold items arrive at 40°F (4°C) or below.",
+     "Los productos fríos llegan a 40°F (4°C) o menos."
+    ],
+    [
+     "Frozen items arrive frozen solid.",
+     "Los congelados llegan bien congelados."
+    ],
+    [
+     "Store food at least 6 inches off the floor.",
+     "Guarda la comida al menos a 6 pulgadas del piso."
+    ],
+    [
+     "Keep raw chicken on the bottom shelf.",
+     "Pon el pollo crudo en el estante de abajo."
+    ]
+   ],
+   "never": [
+    [
+     "Accept damaged, leaking or thawed product.",
+     "Aceptar productos dañados, con fugas o descongelados."
+    ],
+    [
+     "Leave a delivery sitting out.",
+     "Dejar un pedido afuera."
+    ],
+    [
+     "Put new product in front of older product.",
+     "Poner lo nuevo delante de lo más antiguo."
+    ]
+   ],
+   "remember": [
+    "If a cold delivery is above **40°F (4°C)** or the packaging is damaged, don’t put it away. Tell a Leader.",
+    "Si un pedido frío está a más de 40°F (4°C) o el empaque está dañado, no lo guardes. Avisa a un líder."
+   ],
+   "quiz": [
+    {
+     "type": "mc",
+     "q": "After a delivery, what do you put away first?",
+     "qEs": "Después de una entrega, ¿qué guardas primero?",
+     "options": [
+      [
+       "A",
+       "Dry goods",
+       "Productos secos"
+      ],
+      [
+       "B",
+       "Cold and frozen items",
+       "Productos fríos y congelados"
+      ],
+      [
+       "C",
+       "Paper goods",
+       "Productos de papel"
+      ]
+     ]
+    },
+    {
+     "type": "tf",
+     "q": "A box of food can sit on the walk-in floor if it’s closed.",
+     "qEs": "Una caja de comida puede estar en el piso del refrigerador si está cerrada.",
+     "options": [
+      [
+       "T",
+       "True",
+       "Cierto"
+      ],
+      [
+       "F",
+       "False",
+       "Falso"
+      ]
+     ]
+    },
+    {
+     "type": "fill",
+     "q": "Store food at least ___ inches off the floor.",
+     "qEs": "Guarda la comida al menos a ___ pulgadas del piso.",
+     "options": [
+      [
+       "A",
+       "2",
+       "2"
+      ],
+      [
+       "B",
+       "6",
+       "6"
+      ],
+      [
+       "C",
+       "12",
+       "12"
+      ]
+     ]
+    },
+    {
+     "type": "mc",
+     "q": "A case of chicken arrives at 48°F (9°C). What do you do?",
+     "qEs": "Una caja de pollo llega a 48°F (9°C). ¿Qué haces?",
+     "options": [
+      [
+       "A",
+       "Put it in the cooler right away",
+       "Ponla en el refrigerador de inmediato"
+      ],
+      [
+       "B",
+       "Don’t put it away. Tell a Leader.",
+       "No la guardes. Avisa a un líder."
+      ],
+      [
+       "C",
+       "Put it in the freezer",
+       "Ponla en el congelador"
+      ]
+     ]
+    },
+    {
+     "type": "tf",
+     "q": "With FIFO, newer product goes behind or below older product.",
+     "qEs": "Con FIFO, el producto nuevo va detrás o debajo del más antiguo.",
+     "options": [
+      [
+       "T",
+       "True",
+       "Cierto"
+      ],
+      [
+       "F",
+       "False",
+       "Falso"
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}
