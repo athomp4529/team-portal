@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#DD0033">
+<title>The Safe Scoop · Ft. Totten Food Safety Training</title>
+<style>
+@font-face{font-family:Apercu;src:url(assets/fonts/Apercu-Regular.otf) format("opentype");font-weight:400}
+@font-face{font-family:Apercu;src:url(assets/fonts/Apercu-Medium.otf) format("opentype");font-weight:500}
+@font-face{font-family:Apercu;src:url(assets/fonts/Apercu-Bold.otf) format("opentype");font-weight:700}
+*{box-sizing:border-box}
+body{margin:0;background:#FCF7E7;color:#1A1A1A;font-family:Apercu,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#DD0033}a:hover{color:#940929}
+.bar{background:#DD0033;color:#fff}
+.bar .in{max-width:520px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.bar img{height:24px}
+.bar .t{font-weight:500;font-size:11px;letter-spacing:.12em;text-transform:uppercase;text-align:right}
+main{max-width:520px;margin:0 auto;padding:24px 20px 48px;display:flex;flex-direction:column;gap:20px}
+.eyebrow{font-weight:500;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#5B6770}
+.es{color:#004F71}
+h1{margin:0;font-weight:700;font-size:32px;line-height:1.05;letter-spacing:-.02em}
+h2{margin:0;font-weight:700;font-size:24px;line-height:1.1;letter-spacing:-.02em}
+p{margin:0;line-height:1.5}
+.card{background:#fff;border:1px solid #EEEDEB;border-radius:16px;padding:18px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.stack{display:flex;flex-direction:column;gap:10px}
+label{font-weight:500;font-size:13px}
+select,input{width:100%;font:inherit;font-size:17px;padding:13px 14px;border:2px solid #DAD7D2;border-radius:10px;background:#fff;color:#1A1A1A;outline:none}
+select:focus,input:focus{border-color:#3EB1C8;box-shadow:0 0 0 4px rgba(62,177,200,.2)}
+.pin{letter-spacing:.6em;text-align:center;font-weight:700;font-size:24px}
+.btn{appearance:none;border:2px solid #DD0033;background:#DD0033;color:#fff;font:inherit;font-weight:500;font-size:16px;border-radius:999px;padding:14px 22px;min-height:52px;cursor:pointer;width:100%;transition:background 160ms cubic-bezier(.4,0,.2,1),transform 120ms}
+.btn:hover{background:#940929;border-color:#940929;box-shadow:0 6px 18px rgba(221,0,51,.25)}
+.btn:active{transform:scale(.97);background:#7d0722}
+.btn:disabled{background:#DAD7D2;border-color:#DAD7D2;color:#5B6770;box-shadow:none;cursor:default}
+.btn.sec{background:#fff;color:#DD0033}.btn.sec:hover{background:#DD0033;color:#fff}
+.row{display:flex;gap:10px}.row .btn.sec{width:auto;flex:none}
+.link{background:none;border:none;font:inherit;font-size:13px;color:#5B6770;text-decoration:underline;cursor:pointer;padding:8px;align-self:center}
+.err{color:#DD0033;font-size:14px;min-height:1em}
+.pill{display:inline-block;align-self:flex-start;background:#DD0033;color:#fff;font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase;padding:6px 13px;border-radius:999px}
+.pill.navy{background:#004F71}
+.meal{border-radius:16px;padding:20px;display:flex;flex-direction:column;gap:6px}
+.meal.on{background:#249E6B;color:#fff}
+.meal.off{background:#fff;border:2px dashed #DAD7D2}
+.meal .big{font-weight:700;font-size:26px;line-height:1.1;letter-spacing:-.02em}
+.live{display:flex;align-items:center;gap:8px;font-weight:500;font-size:13px;margin-top:6px;font-variant-numeric:tabular-nums}
+.dot{width:10px;height:10px;border-radius:999px;background:#fff;animation:pulse 1.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.7)}}
+.issue{display:flex;gap:14px;align-items:center;text-align:left;width:100%;font:inherit;color:inherit;cursor:pointer}
+.num{flex:none;width:46px;height:46px;border-radius:999px;background:#FCF7E7;color:#DD0033;font-weight:700;display:flex;align-items:center;justify-content:center}
+.hero{width:100%;aspect-ratio:16/10;border-radius:16px;background:#FCF7E7 url(assets/cfa-symbol-red.png) center/48px no-repeat;object-fit:cover;opacity:1}
+.hero.ph{opacity:.35;border:1px solid #EEEDEB}
+.steps{display:grid;grid-template-columns:1fr;gap:8px}
+.step{background:#fff;border-radius:12px;padding:12px 14px;display:flex;gap:12px;align-items:flex-start}
+.step b{color:#DD0033;font-size:18px;min-width:26px}
+.li{display:flex;gap:10px;line-height:1.35;font-size:15px}
+.li small{display:block;font-size:13px;color:#004F71}
+.rem{background:#fff;border-radius:16px;padding:16px;border-left:none}
+.opt{display:flex;gap:12px;align-items:center;width:100%;text-align:left;font:inherit;color:#1A1A1A;background:#fff;border:2px solid #DAD7D2;border-radius:10px;padding:12px 14px;min-height:56px;cursor:pointer}
+.opt.sel{border-color:#DD0033;background:rgba(221,0,51,.06)}
+.opt .l{flex:none;width:30px;height:30px;border-radius:999px;background:#EEEDEB;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center}
+.opt.sel .l{background:#DD0033;color:#fff}
+.prog{height:6px;background:#EEEDEB;border-radius:999px;overflow:hidden}.prog i{display:block;height:100%;background:#DD0033;border-radius:999px;transition:width 240ms cubic-bezier(.4,0,.2,1)}
+.score{border-radius:16px;padding:26px 20px;text-align:center;color:#fff;display:flex;flex-direction:column;gap:6px}
+.score .n{font-weight:700;font-size:72px;line-height:1;letter-spacing:-.03em}
+.hide{display:none!important}
+.fade{animation:fade 220ms cubic-bezier(.4,0,.2,1)}@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="bar"><div class="in"><img src="assets/cfa-script-white.png" alt="Chick-fil-A"><div class="t">The Safe Scoop · Ft. Totten</div></div></div>
+<main id="app"><p class="eyebrow">Loading… · Cargando…</p></main>
+<script>
+(function(){
+var CFG, CONTENT, S = { token: localStorage.getItem('ss_token') || '', status: null, quiz: null };
+var app = document.getElementById('app');
+var esc = function(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); };
+var bold = function(s){ return esc(s).replace(/\*\*(.+?)\*\*/g, '<b style="color:#DD0033">$1</b>'); };
+var timer;
+
+var DEMO = { names: ['Alex Rivera', 'Jordan Lee', 'Maria Santos'], pins: { 'Alex Rivera': '1234', 'Jordan Lee': '1234', 'Maria Santos': '1234' }, passed: false, attempts: 0, best: 0, key: { '02': 'A,F,B,B,F' } };
+function demo(b){
+  var j = {
+    roster: function(){ return { names: DEMO.names }; },
+    check: function(){ return { hasPin: !!DEMO.pins[b.name] }; },
+    login: function(){ if (DEMO.pins[b.name] !== b.pin) return { error: 'That PIN doesn’t match. · El PIN no coincide. (Demo PIN: 1234)' }; DEMO.me = b.name; return { token: 'demo' }; },
+    status: function(){ return { name: DEMO.me || 'Alex Rivera', passMark: 5, opened: ['02'], current: { issue: '02', label: 'Week of Oct 19' }, passed: DEMO.passed, attempts: DEMO.attempts, best: DEMO.best, passedAt: 'Mon Oct 19, 12:04 PM' }; },
+    issues: function(){ return { issues: CONTENT.issues }; },
+    submit: function(){ var k = DEMO.key['02'].split(','), s = k.reduce(function(n, a, i){ return n + (b.answers[i] === a ? 1 : 0); }, 0); DEMO.attempts++; DEMO.best = Math.max(DEMO.best, s); if (s === 5) DEMO.passed = true; return { score: s, total: 5, passed: s === 5 }; }
+  }[b.action]();
+  return new Promise(function(res, rej){ setTimeout(function(){ j.error ? rej(new Error(j.error)) : res(j); }, 250); });
+}
+function api(action, data){
+  if (CFG.demo) return demo(Object.assign({ action: action }, data || {}));
+  var body = Object.assign({ action: action, token: S.token }, data || {});
+  return fetch(CFG.endpoint, { method: 'POST', body: JSON.stringify(body) })
+    .then(function(r){ return r.json(); })
+    .then(function(j){ if (j.error === 'session') { signOut(); throw new Error('Please sign in again.'); } if (j.error) throw new Error(j.error); return j; });
+}
+function render(html){ clearInterval(timer); app.innerHTML = '<div class="stack fade" style="gap:20px">' + html + '</div>'; window.scrollTo(0,0); }
+function $(id){ return document.getElementById(id); }
+function issueById(id){ return CONTENT.issues.filter(function(i){ return i.issue === id; })[0]; }
+function signOut(){ localStorage.removeItem('ss_token'); S.token = ''; S.status = null; showSignIn(); }
+function greet(){ var h = new Date().getHours(); return h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening'; }
+
+/* ---------- Sign in ---------- */
+function showSignIn(){
+  render('<div class="stack" style="gap:6px"><div class="eyebrow">Ft. Totten #04529 · Food Safety Team</div><h1>Weekly Food Safety <span style="color:#DD0033">Training</span></h1><div class="es" style="font-weight:500;font-size:17px">Capacitación semanal de seguridad alimentaria</div></div>' +
+    '<div class="card stack" style="gap:14px"><div class="stack" style="gap:6px"><label for="nm">Your name · <span class="es">Tu nombre</span></label><select id="nm"><option value="">Loading names…</option></select></div>' +
+    '<div class="stack" style="gap:6px"><label for="pin">Employee PIN · <span class="es">PIN de empleado</span></label><input id="pin" class="pin" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="8" autocomplete="off"></div>' +
+    '<div class="err" id="err"></div><button class="btn" id="go" disabled>Sign In · Entrar</button></div>' +
+    '<p style="font-size:13px;color:#5B6770;text-align:center">Use the same employee PIN you use at work. Don’t see your name? Ask a Leader.<br><span class="es">Usa el mismo PIN de empleado del trabajo. ¿No ves tu nombre? Pregunta a un líder.</span></p>');
+  var nm = $('nm'), pin = $('pin'), go = $('go'), err = $('err');
+  api('roster').then(function(r){
+    nm.innerHTML = '<option value="">Choose your name · Elige tu nombre</option>' + r.names.map(function(n){ return '<option>' + esc(n) + '</option>'; }).join('');
+  }).catch(function(e){ err.textContent = e.message; });
+  function check(){ go.disabled = !(nm.value && /^\d{4,8}$/.test(pin.value)); }
+  nm.onchange = function(){ err.textContent = ''; check(); if (nm.value) pin.focus(); };
+  pin.oninput = check;
+  pin.onkeydown = function(e){ if (e.key === 'Enter' && !go.disabled) go.click(); };
+  go.onclick = function(){
+    go.disabled = true; err.textContent = '';
+    api('login', { name: nm.value, pin: pin.value }).then(function(r){
+      S.token = r.token; localStorage.setItem('ss_token', r.token); loadHome();
+    }).catch(function(e){ err.textContent = e.message; pin.value = ''; check(); });
+  };
+}
+
+/* ---------- Home ---------- */
+function loadHome(){
+  render('<p class="eyebrow">Loading… · Cargando…</p>');
+  Promise.all([api('status'), api('issues')]).then(function(v){ S.status = v[0]; CONTENT = { issues: v[1].issues }; showHome(); }).catch(function(e){ render('<div class="err">' + esc(e.message) + '</div><button class="btn sec" onclick="location.reload()">Try Again</button>'); });
+}
+function showHome(){
+  var s = S.status, cur = s.current && issueById(s.current.issue);
+  var first = s.name.split(' ')[0];
+  var meal = !cur ? '' : s.passed
+    ? '<div class="meal on"><div class="eyebrow" style="color:#fff">' + esc(s.current.label) + '</div><div class="big">Meal unlocked</div><div style="font-size:14px">Comida desbloqueada esta semana. Show this screen at the register.<br>Muestra esta pantalla en la caja.</div><div class="live"><span class="dot"></span><span id="clock"></span></div><div style="font-size:13px;opacity:.9">' + esc(s.name) + ' · Passed ' + esc(s.passedAt) + '</div></div>'
+    : '<div class="meal off"><div class="eyebrow">' + esc(s.current.label) + '</div><div class="big">Meal not unlocked yet</div><p style="font-size:14px">Score ' + s.passMark + ' of 5 on this week’s quiz to unlock your Team Member meal.</p><p class="es" style="font-size:13px">Saca ' + s.passMark + ' de 5 en el cuestionario para desbloquear tu comida.</p>' + (s.attempts ? '<p style="font-size:13px;color:#5B6770">Attempts this week: ' + s.attempts + ' · Best: ' + s.best + ' / 5</p>' : '') + '</div>';
+  var earlier = (s.opened || []).filter(function(id){ return !cur || id !== cur.issue; }).map(issueById).filter(Boolean);
+  render('<div class="stack" style="gap:4px"><h1>' + greet() + ', ' + esc(first) + '.</h1><div class="es" style="font-size:15px">Hola, ' + esc(first) + '.</div></div>' + meal +
+    (cur ? '<div class="stack"><span class="pill">This Week · Esta semana</span><button class="card issue" id="openCur"><span class="num">' + cur.issue + '</span><span class="stack" style="gap:2px"><b style="font-size:17px">' + esc(cur.topic) + '</b><span class="es" style="font-size:14px">' + esc(cur.topicEs) + '</span></span></button>' +
+      (s.passed ? '' : '<button class="btn" id="quizCur">Take the Quiz · Tomar el cuestionario</button>') + '</div>' : '<div class="card"><p>No issue is open this week. <span class="es">No hay edición esta semana.</span></p></div>') +
+    (earlier.length ? '<div class="stack"><span class="pill navy">Earlier Issues · Anteriores</span>' + earlier.map(function(i){ return '<button class="card issue" data-i="' + i.issue + '"><span class="num">' + i.issue + '</span><span class="stack" style="gap:2px"><b>' + esc(i.topic) + '</b><span class="es" style="font-size:13px">' + esc(i.topicEs) + '</span></span></button>'; }).join('') + '</div>' : '') +
+    '<button class="link" id="out">Not ' + esc(first) + '? Sign out · Cerrar sesión</button>');
+  if ($('clock')) { var tick = function(){ $('clock').textContent = new Date().toLocaleString('en-US', { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit', second: '2-digit' }); }; tick(); timer = setInterval(tick, 1000); }
+  if ($('openCur')) $('openCur').onclick = function(){ showIssue(cur.issue); };
+  if ($('quizCur')) $('quizCur').onclick = function(){ startQuiz(cur.issue); };
+  [].forEach.call(document.querySelectorAll('[data-i]'), function(b){ b.onclick = function(){ showIssue(b.getAttribute('data-i')); }; });
+  $('out').onclick = signOut;
+}
+
+/* ---------- Newsletter ---------- */
+function showIssue(id){
+  var i = issueById(id), s = S.status, isCur = s.current && s.current.issue === id;
+  if (!i) return render('<div class="card"><p>This issue isn’t ready yet. Please ask a Leader. <span class="es">Esta edición aún no está lista.</span></p></div><button class="btn sec" id="bk">Back · Volver</button>'), ($('bk').onclick = showHome);
+  var li = function(arr, mark, color){ return arr.map(function(a){ return '<div class="li"><b style="color:' + color + '">' + mark + '</b><div>' + esc(a[0]) + '<small>' + esc(a[1]) + '</small></div></div>'; }).join(''); };
+  render('<div class="eyebrow">The Safe Scoop · Issue ' + i.issue + '</div>' +
+    '<img class="hero" src="' + esc(i.image) + '" alt="" onerror="this.removeAttribute(\'src\');this.classList.add(\'ph\')">' +
+    '<div class="stack" style="gap:6px"><div class="eyebrow" style="color:#DD0033">' + esc(i.topic) + '</div><h1>' + esc(i.headline) + '</h1><div class="es" style="font-weight:500;font-size:18px">' + esc(i.headlineEs) + '</div><p style="font-size:16px;margin-top:4px">' + esc(i.intro) + '</p><p class="es" style="font-size:14px">' + esc(i.introEs) + '</p></div>' +
+    '<div class="stack"><span class="pill">' + esc(i.stepsTitle[0]) + '</span><span class="es eyebrow" style="color:#004F71">' + esc(i.stepsTitle[1]) + '</span><div class="steps">' + i.steps.map(function(st, k){ return '<div class="step"><b>0' + (k + 1) + '</b><div><div style="font-weight:500">' + esc(st[0]) + '</div><div class="es" style="font-size:13px">' + esc(st[1]) + '</div></div></div>'; }).join('') + '</div></div>' +
+    '<div class="card stack"><div style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#249E6B">Always · Siempre</div>' + li(i.always, '✓', '#249E6B') + '</div>' +
+    '<div class="card stack"><div style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#DD0033">Never · Nunca</div>' + li(i.never, '×', '#DD0033') + '</div>' +
+    '<div class="rem stack" style="gap:4px"><div style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#DD0033">Remember · <span class="es">Recuerda</span></div><p style="font-size:16px">' + bold(i.remember[0]) + '</p><p class="es" style="font-size:14px">' + esc(i.remember[1]) + '</p></div>' +
+    (isCur && !s.passed ? '<button class="btn" id="q">Take the Quiz · Tomar el cuestionario</button>' : '') +
+    '<button class="btn sec" id="bk">Back · Volver</button>');
+  if ($('q')) $('q').onclick = function(){ startQuiz(id); };
+  $('bk').onclick = showHome;
+}
+
+/* ---------- Quiz ---------- */
+var TYPES = { mc: 'Multiple Choice · Opción múltiple', tf: 'True or False · Cierto o falso', fill: 'Fill in the Blank · Completa' };
+function startQuiz(id){ S.quiz = { issue: issueById(id), i: 0, a: [] }; showQ(); }
+function showQ(){
+  var Q = S.quiz, qs = Q.issue.quiz, q = qs[Q.i], sel = Q.a[Q.i];
+  var selOpt = q.options.filter(function(o){ return o[0] === sel; })[0];
+  var fill = function(t, w){ return esc(t).replace('___', w ? '<u style="color:#DD0033">' + esc(w) + '</u>' : '_____'); };
+  var text = q.type === 'fill' ? fill(q.q, selOpt && selOpt[1]) : esc(q.q);
+  var textEs = q.type === 'fill' ? fill(q.qEs, selOpt && selOpt[2]) : esc(q.qEs);
+  render('<div class="stack" style="gap:8px"><div style="display:flex;justify-content:space-between;gap:12px;font-size:12px"><span class="eyebrow">' + esc(Q.issue.topic) + '</span><span style="font-weight:500">Question ' + (Q.i + 1) + ' of ' + qs.length + '</span></div><div class="prog"><i style="width:' + ((Q.i + 1) / qs.length * 100) + '%"></i></div></div>' +
+    '<div class="card stack" style="gap:14px"><span class="pill navy">' + TYPES[q.type] + '</span><div style="font-weight:700;font-size:20px;line-height:1.3">' + text + '</div><div class="es" style="font-size:15px;line-height:1.4">' + textEs + '</div>' +
+    '<div class="stack">' + q.options.map(function(o){ return '<button class="opt' + (sel === o[0] ? ' sel' : '') + '" data-o="' + o[0] + '"><span class="l">' + o[0] + '</span><span><span style="display:block;font-weight:500">' + esc(o[1]) + '</span>' + (o[2] !== o[1] ? '<span class="es" style="font-size:13px">' + esc(o[2]) + '</span>' : '') + '</span></button>'; }).join('') + '</div></div>' +
+    '<div class="err" id="err"></div><div class="row"><button class="btn sec" id="bk">Back</button><button class="btn" id="nx"' + (sel ? '' : ' disabled') + '>' + (Q.i === qs.length - 1 ? 'Submit · Enviar' : 'Next · Siguiente') + '</button></div>');
+  [].forEach.call(document.querySelectorAll('[data-o]'), function(b){ b.onclick = function(){ Q.a[Q.i] = b.getAttribute('data-o'); showQ(); }; });
+  $('bk').onclick = function(){ if (Q.i === 0) showHome(); else { Q.i--; showQ(); } };
+  $('nx').onclick = function(){
+    if (Q.i < qs.length - 1) { Q.i++; return showQ(); }
+    $('nx').disabled = true; $('nx').textContent = 'Grading… · Calificando…';
+    api('submit', { issue: Q.issue.issue, answers: Q.a }).then(showResult).catch(function(e){ $('err').textContent = e.message; $('nx').disabled = false; $('nx').textContent = 'Submit · Enviar'; });
+  };
+}
+function showResult(r){
+  render('<div class="score" style="background:' + (r.passed ? '#249E6B' : '#DD0033') + '"><div class="eyebrow" style="color:#fff">Your Score · Tu puntuación</div><div class="n">' + r.score + '<span style="font-size:32px"> / ' + r.total + '</span></div>' +
+    '<div style="font-weight:700;font-size:18px">' + (r.passed ? 'You passed. Your meal is unlocked.' : 'Not quite. Review the issue and try again.') + '</div><div style="font-size:14px">' + (r.passed ? 'Aprobaste. Tu comida está desbloqueada.' : 'Casi. Repasa la edición e inténtalo otra vez.') + '</div></div>' +
+    (r.passed ? '<p style="text-align:center">Thank you for keeping our Guests safe.<br><span class="es">Gracias por cuidar a nuestros Invitados.</span></p><button class="btn" id="h">See My Meal Status · Ver mi estado</button>'
+      : '<button class="btn" id="rv">Review Issue · Repasar</button><button class="btn sec" id="rt">Try Again · Intentar otra vez</button>'));
+  if ($('h')) $('h').onclick = loadHome;
+  if ($('rv')) $('rv').onclick = function(){ api('status').then(function(s){ S.status = s; showIssue(S.quiz.issue.issue); }); };
+  if ($('rt')) $('rt').onclick = function(){ startQuiz(S.quiz.issue.issue); };
+}
+
+fetch('config.json', { cache: 'no-store' }).then(function(r){ return r.json(); })
+  .then(function(c){ CFG = c; CONTENT = { issues: [] };
+    if (!/PASTE/.test(CFG.endpoint)) return;
+    CFG.demo = true; S.token = ''; document.querySelector('.bar .t').textContent = 'Demo mode · add web app URL to config.json';
+    return fetch('content.json', { cache: 'no-store' }).then(function(r){ return r.json(); }).then(function(j){ CONTENT = j; }); })
+  .then(function(){ S.token ? loadHome() : showSignIn(); })
+  .catch(function(e){ render('<div class="err">Could not start. ' + esc(e.message) + '</div>'); });
+})();
+</script>
+</body>
+</html>
