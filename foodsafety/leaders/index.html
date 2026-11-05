@@ -14,34 +14,36 @@ body{margin:0;min-height:100vh;display:grid;place-items:center;background:#FCF7E
   <h1>Training Dashboard</h1>
   <p>Leaders only. Sign in with your cfafttotten.com Google account.</p>
   <div id="inapp">
-    <p style="color:#1A1A1A">Google sign-in doesn’t work inside this app. Please open this page in your phone’s browser.</p>
+    <p style="color:#1A1A1A">To sign in, open this page in your phone’s browser.</p>
     <a class="btn" id="open" href="#">Open in Browser</a>
     <ol class="steps" id="steps"></ol>
     <button class="btn sec" id="copy" type="button">Copy Link</button>
     <p class="small">Tip: once it opens, use Share ▸ Add to Home Screen so you can skip this next time.</p>
-    <a class="small" href="#" id="anyway">Try signing in here anyway</a>
   </div>
-  <div id="btn"></div>
-  <a class="small" href="#" id="stuck">Sign-in stuck? Open in your browser</a>
+  <div id="btn" style="display:none"></div>
   <p id="err"></p>
   <p class="small" id="ua" style="display:none;word-break:break-all;color:#5B6770"></p>
-  <p class="small" style="color:#DAD7D2">v2</p>
+  <p class="small" style="color:#DAD7D2">v3</p>
 </div>
 <script>
 var err = document.getElementById('err');
-var ua = navigator.userAgent || '', url = location.href.split('#')[0];
+var ua = navigator.userAgent || '', inBrowser = /[?&]browser=1/.test(location.search);
+var url = location.origin + location.pathname + '?browser=1';
 var isIOS = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 var isAndroid = /Android/.test(ua);
-var inApp = !/[?&]browser=1/.test(location.search) && (
+var inApp = (
   /FBAN|FBAV|FB_IAB|Instagram|Line\/|Snapchat|Twitter|LinkedInApp|GroupMe|Teams\/|MicrosoftTeams|Slack|HotSchedules|7shifts|Workplace|KAKAOTALK|WhatsApp|GSA\//i.test(ua) ||
   (isAndroid && (/; wv\)/.test(ua) || /Version\/\d/.test(ua))) ||
   (isIOS && !/Safari\//.test(ua) && !/CriOS|FxiOS|EdgiOS/.test(ua)));
 if (/[?&]ua=1/.test(location.search)) { var u = document.getElementById('ua'); u.style.display = ''; u.textContent = ua; }
-var box = document.getElementById('inapp'), stuck = document.getElementById('stuck');
+var box = document.getElementById('inapp');
 function showOpen() {
   var open = document.getElementById('open'), steps = document.getElementById('steps');
-  box.style.display = 'grid'; document.getElementById('btn').style.display = 'none'; stuck.style.display = 'none';
-  if (isAndroid) {
+  box.style.display = 'grid';
+  if (!inApp) {
+    open.href = url;
+    steps.innerHTML = '<li>Tap <b>Open in Browser</b> above.</li><li>Sign in with your cfafttotten.com account.</li>';
+  } else if (isAndroid) {
     open.href = 'intent://' + url.replace(/^https?:\/\//, '') + '#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=' + encodeURIComponent(url) + ';end';
     steps.innerHTML = '<li>Tap <b>Open in Browser</b> above.</li><li>If nothing happens, tap the <b>⋮</b> menu at the top and choose <b>Open in Chrome</b> (or Open in browser).</li><li>Sign in with your cfafttotten.com account.</li>';
   } else {
@@ -53,10 +55,8 @@ function showOpen() {
     if (navigator.clipboard) navigator.clipboard.writeText(url).then(done, function () { prompt('Copy this link:', url); });
     else prompt('Copy this link:', url);
   };
-  document.getElementById('anyway').onclick = function (e) { e.preventDefault(); box.style.display = 'none'; document.getElementById('btn').style.display = ''; stuck.style.display = ''; };
 }
-stuck.onclick = function (e) { e.preventDefault(); showOpen(); };
-if (inApp) showOpen();
+if (inBrowser) document.getElementById('btn').style.display = ''; else showOpen();
 function fail(t){ err.textContent = t; }
 function ready(cb){ if (window.google && google.accounts) cb(); else setTimeout(function(){ ready(cb); }, 100); }
 fetch('../config.json', { cache: 'no-store' })
@@ -64,13 +64,14 @@ fetch('../config.json', { cache: 'no-store' })
   .then(function (t) {
     var c; try { c = JSON.parse(t); } catch (e) { throw new Error('config.json has a typo: ' + e.message); }
     if (!c.dashboardUrl || /PASTE/.test(c.dashboardUrl)) throw new Error('config.json does not have a dashboardUrl yet.');
+    if (!inBrowser) return;
     ready(function () {
       google.accounts.id.initialize({
         client_id: c.googleClientId, hd: 'cfafttotten.com', auto_select: true,
         callback: function (res) { location.replace(c.dashboardUrl + (c.dashboardUrl.indexOf('?') < 0 ? '?' : '&') + 't=' + encodeURIComponent(res.credential)); }
       });
       google.accounts.id.renderButton(document.getElementById('btn'), { theme: 'outline', size: 'large', shape: 'pill', text: 'signin_with' });
-      if (!inApp) google.accounts.id.prompt();
+      google.accounts.id.prompt();
     });
   })
   .catch(function (e) { fail('Could not start sign-in. ' + e.message); });
