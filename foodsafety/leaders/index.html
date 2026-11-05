@@ -22,7 +22,10 @@ body{margin:0;min-height:100vh;display:grid;place-items:center;background:#FCF7E
     <a class="small" href="#" id="anyway">Try signing in here anyway</a>
   </div>
   <div id="btn"></div>
+  <a class="small" href="#" id="stuck">Sign-in stuck? Open in your browser</a>
   <p id="err"></p>
+  <p class="small" id="ua" style="display:none;word-break:break-all;color:#5B6770"></p>
+  <p class="small" style="color:#DAD7D2">v2</p>
 </div>
 <script>
 var err = document.getElementById('err');
@@ -31,11 +34,13 @@ var isIOS = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === 'MacIntel' &&
 var isAndroid = /Android/.test(ua);
 var inApp = !/[?&]browser=1/.test(location.search) && (
   /FBAN|FBAV|FB_IAB|Instagram|Line\/|Snapchat|Twitter|LinkedInApp|GroupMe|Teams\/|MicrosoftTeams|Slack|HotSchedules|7shifts|Workplace|KAKAOTALK|WhatsApp|GSA\//i.test(ua) ||
-  (isAndroid && /; wv\)/.test(ua)) ||
+  (isAndroid && (/; wv\)/.test(ua) || /Version\/\d/.test(ua))) ||
   (isIOS && !/Safari\//.test(ua) && !/CriOS|FxiOS|EdgiOS/.test(ua)));
-if (inApp) {
-  var box = document.getElementById('inapp'), open = document.getElementById('open'), steps = document.getElementById('steps');
-  box.style.display = 'grid'; document.getElementById('btn').style.display = 'none';
+if (/[?&]ua=1/.test(location.search)) { var u = document.getElementById('ua'); u.style.display = ''; u.textContent = ua; }
+var box = document.getElementById('inapp'), stuck = document.getElementById('stuck');
+function showOpen() {
+  var open = document.getElementById('open'), steps = document.getElementById('steps');
+  box.style.display = 'grid'; document.getElementById('btn').style.display = 'none'; stuck.style.display = 'none';
   if (isAndroid) {
     open.href = 'intent://' + url.replace(/^https?:\/\//, '') + '#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=' + encodeURIComponent(url) + ';end';
     steps.innerHTML = '<li>Tap <b>Open in Browser</b> above.</li><li>If nothing happens, tap the <b>⋮</b> menu at the top and choose <b>Open in Chrome</b> (or Open in browser).</li><li>Sign in with your cfafttotten.com account.</li>';
@@ -48,8 +53,10 @@ if (inApp) {
     if (navigator.clipboard) navigator.clipboard.writeText(url).then(done, function () { prompt('Copy this link:', url); });
     else prompt('Copy this link:', url);
   };
-  document.getElementById('anyway').onclick = function (e) { e.preventDefault(); box.style.display = 'none'; document.getElementById('btn').style.display = ''; };
+  document.getElementById('anyway').onclick = function (e) { e.preventDefault(); box.style.display = 'none'; document.getElementById('btn').style.display = ''; stuck.style.display = ''; };
 }
+stuck.onclick = function (e) { e.preventDefault(); showOpen(); };
+if (inApp) showOpen();
 function fail(t){ err.textContent = t; }
 function ready(cb){ if (window.google && google.accounts) cb(); else setTimeout(function(){ ready(cb); }, 100); }
 fetch('../config.json', { cache: 'no-store' })
