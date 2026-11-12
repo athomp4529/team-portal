@@ -14,14 +14,15 @@ body{margin:0;min-height:100vh;display:grid;place-items:center;background:#FCF7E
   <div class="eyebrow">Chick-fil-A Ft. Totten</div>
   <h1>Team Member Records</h1>
   <p>Leaders only. Sign in with your cfafttotten.com Google account.</p>
+  <div id="btn" style="min-height:44px"></div>
   <div id="inapp">
-    <p style="color:#1A1A1A">To sign in, open this page in your phone’s browser.</p>
+    <div class="eyebrow">Or</div>
+    <p style="color:#1A1A1A">Opened this from an app? Google sign-in won’t work there. Copy the link and open it in your phone’s browser.</p>
     <button class="btn" id="copy" type="button">Copy Link</button>
     <input class="link" id="link" readonly onclick="this.select()">
     <ol class="steps" id="steps"></ol>
     <p class="small">Tip: once it opens, use Share ▸ Add to Home Screen so you can skip this next time.</p>
   </div>
-  <div id="btn" style="display:none"></div>
   <p id="err"></p>
 </div>
 <script>
@@ -44,10 +45,12 @@ function showCopy() {
     if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(url).then(done, fallback); else fallback();
   };
 }
-if (inBrowser) document.getElementById('btn').style.display = ''; else showCopy();
+if (!inBrowser) showCopy();
 function fail(t){ err.textContent = t; }
 function ready(cb){ if (window.google && google.accounts) cb(); else setTimeout(function(){ ready(cb); }, 100); }
-if (inBrowser) fetch('/config.json', { cache: 'no-store' })
+var live = /cfafttotten\.com$/.test(location.hostname);
+if (!live) document.getElementById('btn').innerHTML = '<div style="display:inline-flex;align-items:center;gap:10px;height:40px;padding:0 20px;border:1px solid #DADCE0;border-radius:999px;font:500 14px Arial,sans-serif;color:#3C4043;background:#fff"><span style="font:700 16px Arial,sans-serif;color:#4285F4">G</span>Sign in with Google</div><p class="small" style="margin-top:6px">Preview only. The real Google button loads on the live site.</p>';
+if (live) fetch('/config.json', { cache: 'no-store' })
   .then(function (r) { if (!r.ok) throw new Error('config.json was not found (status ' + r.status + ').'); return r.text(); })
   .then(function (t) {
     var c; try { c = JSON.parse(t); } catch (e) { throw new Error('config.json has a typo: ' + e.message); }
