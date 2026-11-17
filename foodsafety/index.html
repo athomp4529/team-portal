@@ -92,8 +92,11 @@ function demo(b){
 function api(action, data){
   if (CFG.demo) return demo(Object.assign({ action: action }, data || {}));
   var body = Object.assign({ action: action, token: S.token }, data || {});
-  return fetch(CFG.endpoint, { method: 'POST', body: JSON.stringify(body) })
-    .then(function(r){ return r.json(); })
+  var send = function(){ return fetch(CFG.endpoint, { method: 'POST', body: JSON.stringify(body), cache: 'no-store', redirect: 'follow' })
+    .then(function(r){ return r.text(); })
+    .then(function(t){ try { return JSON.parse(t); } catch (e) { throw new Error('bad'); } }); };
+  return send().then(function(j){ return j.error && /Something went wrong/.test(j.error) ? send() : j; }, function(){ return send(); })
+    .catch(function(){ throw new Error('Couldn’t connect. Check your signal and tap Try Again. · No se pudo conectar. Revisa tu señal e inténtalo otra vez.'); })
     .then(function(j){ if (j.error === 'session') { signOut(); throw new Error('Please sign in again.'); } if (j.error) throw new Error(j.error); return j; });
 }
 function render(html){ clearInterval(timer); app.innerHTML = '<div class="stack fade" style="gap:20px">' + html + '</div>'; window.scrollTo(0,0); }
@@ -128,7 +131,7 @@ function showSignIn(){
 /* ---------- Home ---------- */
 function loadHome(){
   render('<p class="eyebrow">Loading… · Cargando…</p>');
-  Promise.all([api('status'), api('issues')]).then(function(v){ S.status = v[0]; CONTENT = { issues: v[1].issues }; showHome(); }).catch(function(e){ render('<div class="err">' + esc(e.message) + '</div><button class="btn sec" onclick="location.reload()">Try Again</button>'); });
+  Promise.all([api('status'), api('issues')]).then(function(v){ S.status = v[0]; CONTENT = { issues: v[1].issues }; showHome(); }).catch(function(e){ render('<div class="err">' + esc(e.message) + '</div><button class="btn" id="again">Try Again · Intentar otra vez</button><button class="link" id="out">Sign out · Cerrar sesión</button>'); $('again').onclick = loadHome; $('out').onclick = signOut; });
 }
 function showHome(){
   var s = S.status, cur = s.current && issueById(s.current.issue);
