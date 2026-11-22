@@ -75,7 +75,8 @@ var CFG, CONTENT, S = { token: localStorage.getItem('ss_token') || '', status: n
 var app = document.getElementById('app');
 var esc = function(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); };
 var bold = function(s){ return esc(s).replace(/\*\*(.+?)\*\*/g, '<b style="color:#DD0033">$1</b>'); };
-var timer;
+var timer, PV = (location.search.match(/[?&]preview=([^&]+)/) || [])[1];
+if (PV) PV = decodeURIComponent(PV);
 
 var DEMO = { names: ['Alex Rivera', 'Jordan Lee', 'Maria Santos'], pins: { 'Alex Rivera': '1234', 'Jordan Lee': '1234', 'Maria Santos': '1234' }, passed: false, attempts: 0, best: 0, key: { '02': 'A,F,B,B,F' } };
 function demo(b){
@@ -97,7 +98,7 @@ function api(action, data){
     .then(function(t){ try { return JSON.parse(t); } catch (e) { throw new Error('bad'); } }); };
   return send().then(function(j){ return j.error && /Something went wrong/.test(j.error) ? send() : j; }, function(){ return send(); })
     .catch(function(){ throw new Error('Couldn’t connect. Check your signal and tap Try Again. · No se pudo conectar. Revisa tu señal e inténtalo otra vez.'); })
-    .then(function(j){ if (j.error === 'session') { signOut(); throw new Error('Please sign in again.'); } if (j.error) throw new Error(j.error); return j; });
+    .then(function(j){ if (j.error === 'leader') throw new Error('Your Leader preview link expired. Go back to the Training Dashboard and click Preview Issues again.'); if (j.error === 'session') { signOut(); throw new Error('Please sign in again.'); } if (j.error) throw new Error(j.error); return j; });
 }
 function render(html){ clearInterval(timer); app.innerHTML = '<div class="stack fade" style="gap:20px">' + html + '</div>'; window.scrollTo(0,0); }
 function $(id){ return document.getElementById(id); }
@@ -133,7 +134,27 @@ function loadHome(){
   render('<p class="eyebrow">Loading… · Cargando…</p>');
   Promise.all([api('status'), api('issues')]).then(function(v){ S.status = v[0]; CONTENT = { issues: v[1].issues }; showHome(); }).catch(function(e){ render('<div class="err">' + esc(e.message) + '</div><button class="btn" id="again">Try Again · Intentar otra vez</button><button class="link" id="out">Sign out · Cerrar sesión</button>'); $('again').onclick = loadHome; $('out').onclick = signOut; });
 }
+/* ---------- Leader preview ---------- */
+function loadPreview(){
+  render('<p class="eyebrow">Loading preview…</p>');
+  api('preview', { leader: PV }).then(function(r){
+    CONTENT = { issues: r.issues.filter(function(i){ return !i.problem; }) }; S.all = r.issues;
+    S.status = { name: 'Leader Preview', current: null, makeup: [], opened: [], passMark: 5 }; showHome();
+  }).catch(function(e){ render('<div class="err">' + esc(e.message) + '</div><button class="btn" id="again">Try Again</button>'); $('again').onclick = loadPreview; });
+}
+function showPreview(){
+  var up = S.all.filter(function(i){ return !i.open; }), past = S.all.filter(function(i){ return i.open; }).reverse();
+  var card = function(i){ return i.problem
+    ? '<div class="card stack" style="border:2px solid #DD0033;gap:4px"><b>Issue ' + esc(i.issue) + ' · ' + esc(i.topic) + '</b><span style="font-size:14px;color:#5B6770">Opens ' + esc(i.opens) + '</span><span class="err">Can’t show this issue: ' + esc(i.problem) + '</span></div>'
+    : '<button class="card issue" data-i="' + esc(i.issue) + '"><span class="num">' + esc(i.issue) + '</span><span class="stack" style="gap:2px"><b style="font-size:17px">' + esc(i.topic) + '</b><span style="font-size:14px;color:#5B6770">' + (i.open ? 'Opened ' : 'Opens ') + esc(i.opens) + '</span></span></button>'; };
+  render('<div class="card stack" style="background:#004F71;color:#fff;border:0;gap:4px"><div class="eyebrow" style="color:#fff">Leader Preview</div><div style="font-size:14px">Team Members can’t see upcoming issues. Quiz answers here aren’t saved.</div></div>' +
+    '<div class="stack" style="gap:4px"><h1>Preview Issues</h1></div>' +
+    '<div class="stack"><span class="pill">Upcoming · ' + up.length + '</span>' + (up.length ? up.map(card).join('') : '<div class="card"><p>No upcoming issues on the Weeks tab.</p></div>') + '</div>' +
+    (past.length ? '<div class="stack"><span class="pill navy">Already Open</span>' + past.map(card).join('') + '</div>' : ''));
+  [].forEach.call(document.querySelectorAll('[data-i]'), function(b){ b.onclick = function(){ showIssue(b.getAttribute('data-i')); }; });
+}
 function showHome(){
+  if (PV) return showPreview();
   var s = S.status, cur = s.current && issueById(s.current.issue);
   var first = s.name.split(' ')[0], m = s.meal, nx = s.next || { approved: s.passed, label: '' };
   var wk = function(l){ return esc(String(l || '').replace(/^Week of\s*/, '')); };
@@ -175,7 +196,8 @@ function showIssue(id){
     '<div class="card stack"><div style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#249E6B">Always · Siempre</div>' + li(i.always, '✓', '#249E6B') + '</div>' +
     '<div class="card stack"><div style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#DD0033">Never · Nunca</div>' + li(i.never, '×', '#DD0033') + '</div>' +
     '<div class="rem stack" style="gap:4px"><div style="font-weight:700;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#DD0033">Remember · <span class="es">Recuerda</span></div><p style="font-size:16px">' + bold(i.remember[0]) + '</p><p class="es" style="font-size:14px">' + esc(i.remember[1]) + '</p></div>' +
-    ((isCur && !s.passed) || isMk ? '<button class="btn" id="q">Take the Quiz · Tomar el cuestionario</button>' : '') +
+    (PV ? '<button class="btn" id="q">Preview the Quiz</button>' : '') +
+    (!PV && ((isCur && !s.passed) || isMk) ? '<button class="btn" id="q">Take the Quiz · Tomar el cuestionario</button>' : '') +
     '<button class="btn sec" id="bk">Back · Volver</button>');
   if ($('q')) $('q').onclick = function(){ startQuiz(id); };
   $('bk').onclick = showHome;
@@ -198,9 +220,23 @@ function showQ(){
   $('bk').onclick = function(){ if (Q.i === 0) showHome(); else { Q.i--; showQ(); } };
   $('nx').onclick = function(){
     if (Q.i < qs.length - 1) { Q.i++; return showQ(); }
+    if (PV) return showPreviewResult();
     $('nx').disabled = true; $('nx').textContent = 'Grading… · Calificando…';
     api('submit', { issue: Q.issue.issue, answers: Q.a }).then(showResult).catch(function(e){ $('err').textContent = e.message; $('nx').disabled = false; $('nx').textContent = 'Submit · Enviar'; });
   };
+}
+function showPreviewResult(){
+  var Q = S.quiz, key = Q.issue.key || [], n = 0;
+  var rows = Q.issue.quiz.map(function(q, k){
+    var ok = Q.a[k] === key[k]; if (ok) n++;
+    var opt = function(l){ var o = q.options.filter(function(x){ return x[0] === l; })[0]; return o ? l + ' · ' + esc(o[1]) : '<span class="err">“' + esc(l || '') + '” is not one of the choices</span>'; };
+    return '<div class="card stack" style="gap:6px;border:2px solid ' + (ok ? '#249E6B' : '#DD0033') + '"><b>' + (k + 1) + '. ' + esc(q.q) + '</b><span style="font-size:14px">Your answer: ' + opt(Q.a[k]) + '</span><span style="font-size:14px;color:#249E6B">Answer key: ' + opt(key[k]) + '</span></div>';
+  }).join('');
+  var warn = key.length !== Q.issue.quiz.length ? '<div class="err">The Weeks tab has ' + key.length + ' answers but this issue has ' + Q.issue.quiz.length + ' questions.</div>' : '';
+  render('<div class="score" style="background:#004F71"><div class="eyebrow" style="color:#fff">Preview Score · Not saved</div><div class="n">' + n + '<span style="font-size:32px"> / ' + Q.issue.quiz.length + '</span></div></div>' + warn + rows +
+    '<button class="btn" id="rt">Try Again</button><button class="btn sec" id="h">Back to Preview List</button>');
+  $('rt').onclick = function(){ startQuiz(Q.issue.issue); };
+  $('h').onclick = showHome;
 }
 function showResult(r){
   render('<div class="score" style="background:' + (r.passed ? '#249E6B' : '#DD0033') + '"><div class="eyebrow" style="color:#fff">Your Score · Tu puntuación</div><div class="n">' + r.score + '<span style="font-size:32px"> / ' + r.total + '</span></div>' +
@@ -217,7 +253,7 @@ fetch('config.json', { cache: 'no-store' }).then(function(r){ return r.json(); }
     if (!/PASTE/.test(CFG.endpoint)) return;
     CFG.demo = true; S.token = ''; document.querySelector('.bar .t').textContent = 'Demo mode · add web app URL to config.json';
     return fetch('content.json', { cache: 'no-store' }).then(function(r){ return r.json(); }).then(function(j){ CONTENT = j; }); })
-  .then(function(){ S.token ? loadHome() : showSignIn(); })
+  .then(function(){ if (PV && !CFG.demo) return loadPreview(); S.token ? loadHome() : showSignIn(); })
   .catch(function(e){ render('<div class="err">Could not start. ' + esc(e.message) + '</div>'); });
 })();
 </script>
